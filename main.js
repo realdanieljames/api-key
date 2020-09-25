@@ -1,4 +1,3 @@
-const { lstat } = require('fs')
 // Use any ONE of these API's that needs an API key to get data.
 // Read the docs to see how to call for and get the data that you want
 // Or you can use one of your choosing if you are comfortable, HOWEVER it must require an API Key
@@ -44,51 +43,68 @@ const { lstat } = require('fs')
 //sources parameters        https://newsapi.org/docs/endpoints/sources
 //category, language, country, apiKey
 
-// const topHeadlines  = ''
-// const everything = ''
-// const sources = ''
 
 const fetch = require('node-fetch')
-// const country = 'us'
-let key = 'cf27e2bef2ed4e4db013a716d780a9a9'
-let url = `http://newsapi.org/v2/top-headlines?country=us&apiKey=${key}`
+const key = require('./key')
+
+// // // date intro
+const today = new Date().toDateString();
+
+// readline to listen for user's input after running app
+const readline = require('readline');
+const interface = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+const welcomeMessage = `
+Today is ${today}.
+Welcome to the NEWS APP.
+What would you like to see?
+Type "everything" to receive latest news.
+Or you can search for specific news by typing a word: 
+`
 
 
-fetch(url)
-    .then((data) => data.json())
-    .then((newData) => {
-        newData = newData.articles
-        newData.forEach(({ source, title, description, author }) => {
-            const sourceName = source.name
-            console.log(
-                `
-                From ${sourceName}
-                ${title}
 
-                ${description}
 
-                By ${author}
-                ------------------------------------------------------------------------------------------------------------------------
 
-                `
-            )
+const newsInfo = (searchTerm) => {
+    if (searchTerm === 'everything' && searchTerm === undefined) {
+        url = `http://newsapi.org/v2/top-headlines?country=us&apiKey=${key}`
+    }
+    url = `http://newsapi.org/v2/everything?q=${searchTerm}&apiKey=${key}`
+    fetch(url)
+        .then((data) => data.json())
+        .then((newData) => {
+            newData = newData.articles
+            newData.forEach(({ source, title, description, author }) => {
+                const sourceName = source.name
+                const outputFormat =
+        `   
+From ${sourceName}
+${title}
+
+${description}
+
+By ${author}
+========================================================================
+
+`
+                console.log(outputFormat)
+
+            })
 
         })
-        // console.log(newData)
+        .catch((err) => {
+            console.log(`*** PLEASE RUN  NODE MAIN.JS  AGAIN AND TYPE IN A SEARCH TERM ***`)
+        })
+    interface.close();
+}
 
-    })
 
-// // date intro
 
-// var today = new Date().toDateString();
 
-// console.log(
-//     `
-//     Today is ${today}.
-//     Welcome to my news app.
-//     What would you like to see?
-//     Type "everything" to receive latest news.
-//     Or you can search for specific news by typing a word: 
-//     `
-// )
-// console.log(process.argv[2])
+interface.question(
+    welcomeMessage, newsInfo
+)
+
