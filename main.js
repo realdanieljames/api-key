@@ -1,21 +1,24 @@
-// Use any ONE of these API's that needs an API key to get data.
-// Read the docs to see how to call for and get the data that you want
-// Or you can use one of your choosing if you are comfortable, HOWEVER it must require an API Key
-// Parse the data, and log any important information you would like to show in a nice format of your choosing.
-// You can add your own spin to the data in how you present it.
-// Use any tools we've practiced such as promises, destructuring, etc.
-// Once everything works, upload the file and submit.
+/******************************************************************************************************************
+ *                        // USE ANY ONE OF THESE API'S THAT NEEDS AN API KEY TO GET DATA.                        *
+ *                     // READ THE DOCS TO SEE HOW TO CALL FOR AND GET THE DATA THAT YOU WANT                     *
+ *       // OR YOU CAN USE ONE OF YOUR CHOOSING IF YOU ARE COMFORTABLE, HOWEVER IT MUST REQUIRE AN API KEY        *
+ * // PARSE THE DATA, AND LOG ANY IMPORTANT INFORMATION YOU WOULD LIKE TO SHOW IN A NICE FORMAT OF YOUR CHOOSING. *
+ *                        // YOU CAN ADD YOUR OWN SPIN TO THE DATA IN HOW YOU PRESENT IT.                         *
+ *                     // USE ANY TOOLS WE'VE PRACTICED SUCH AS PROMISES, DESTRUCTURING, ETC.                     *
+ *                             // ONCE EVERYTHING WORKS, UPLOAD THE FILE AND SUBMIT.                              *
+ ******************************************************************************************************************/
 
-
-// // Weather API- https://openweathermap.org/api
-// // Weather/Air Quality API-  https://www.airvisual.com/dashboard/api
-// // Recipe API- https://developer.edamam.com/ (uses two key code)
-// // Superheroes API- https://superheroapi.com/index.html
-// // Movies API- https://www.omdbapi.com/
-// // Sports API - https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=Arsenal
-// // News API - https://newsapi.org/
-// // Harvard Art Museum API - https://www.harvardartmuseums.org/collections/api
-
+/******************************************************************************************
+ *                      // // APIs to CHOOSE FROM:
+ *         // // WEATHER API- HTTPS://OPENWEATHERMAP.ORG/API                    *
+ *         // // WEATHER/AIR QUALITY API-  HTTPS://WWW.AIRVISUAL.COM/DASHBOARD/API         *
+ *         // // RECIPE API- HTTPS://DEVELOPER.EDAMAM.COM/ (USES TWO KEY CODE)           *
+ *         // // SUPERHEROES API- HTTPS://SUPERHEROAPI.COM/INDEX.HTML               *
+ *         // // MOVIES API- HTTPS://WWW.OMDBAPI.COM/                       *
+ *         // // SPORTS API - HTTPS://WWW.THESPORTSDB.COM/API/V1/JSON/1/SEARCHTEAMS.PHP?T=ARSENAL *
+ *         // // NEWS API - HTTPS://NEWSAPI.ORG/                          *
+ *         // // HARVARD ART MUSEUM API - HTTPS://WWW.HARVARDARTMUSEUMS.ORG/COLLECTIONS/API    *
+ ******************************************************************************************/
 
 // If you want to make your project a little more robust and dynamic you could use tools like the ones below:
 // Read the docs to see how it works. Not hard.
@@ -77,7 +80,7 @@ const newsInfo = (searchTerm) => {
         .then((data) => data.json())
         .then((newData) => {
             newData = newData.articles
-            newData.forEach(({ source, title, description, author }) => {
+            newData.forEach(({ source, title, description, author, url }) => {
                 const sourceName = source.name
                 const outputFormat =
         `   
@@ -87,6 +90,8 @@ ${title}
 ${description}
 
 By ${author}
+
+Link to news =>: ${url}
 ========================================================================
 
 `
